@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ReviewCollection;
 use App\Http\Resources\ReviewResource;
 use App\Models\Review;
-use Dotenv\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
@@ -46,18 +45,16 @@ class ReviewController extends Controller
             'body' => 'required',
             'rating' => 'required',
             'category_id' => 'required',
+            'city' => 'required'
         ]);
-
-        // $if($validator->fails()){
-        //     return response()->json($validator->errors());
-        // }
 
         $review = Review::create([
             'title' => $request->title,
             'body' => $request->body,
             'rating' => $request->rating,
             'category_id' => $request->category_id,
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::user()->id,
+            'city' => $request->city
         ]);
 
         return response()->json(['Review created successfully.', new ReviewResource($review)]);
@@ -99,17 +96,16 @@ class ReviewController extends Controller
             'body' => 'required',
             'rating' => 'required',
             'category_id' => 'required',
+            'city' => 'required'
+
         ]);
 
-        // $if($validator->fails()){
-        //     return response()->json($validator->errors());
-        // }
 
-
-        $review->title->$request->title;
-        $review->body->$request->body;
-        $review->rating->$request->rating;
-        $review->category_id->$request->category_id;
+        $review->title = $request->title;
+        $review->body = $request->body;
+        $review->rating = $request->rating;
+        $review->category_id = $request->category_id;
+        $review->city = $request->city;
 
         $review->save();
 

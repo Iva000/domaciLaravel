@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\CityReviewController;
 use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\ReviewTestController;
+use App\Http\Controllers\UserReviewController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,27 +19,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/reviews', [ReviewTestController::class, 'index']);
 
-//Route::get('/reviews/{id}', [ReviewTestController::class, 'show']);
+Route::resource('/reviews', ReviewController::class)->only(['store', 'update', 'destroy']);
 
-Route::resource('reviews', ReviewController::class);
-
-Route::get('/users{id}', [UserController::class, 'show'])->name('users.show');
+Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
 
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
-Route::get('/users{id}/reviews', [UserReviewController::class, 'index'])->name('users.reviews.index');
+Route::get('/users/{id}/reviews', [UserReviewController::class, 'index'])->name('users.reviews.index');
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::get('/city/{id}/reviews', [CityReviewController::class, 'index'])->name('city.reviews.index');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/profile', function (Request $request) {
         return auth()->user();
     });
-    Route::resource('reviews', ReviewController::class)->only(['update', 'store', 'destroy']);
+    Route::resource('/reviews', ReviewController::class)->only(['store', 'update', 'destroy']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 

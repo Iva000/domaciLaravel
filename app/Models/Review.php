@@ -13,12 +13,20 @@ class Review extends Model
     protected $fillable = [
         'title',
         'body',
-        'rating'
+        'rating',
+        'category_id',
+        'user_id',
+        'city'
     ];
 
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function cityTo()
+    {
+        return $this->belongsTo(City::class);
     }
 
     public function user()

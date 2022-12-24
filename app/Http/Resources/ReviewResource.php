@@ -24,7 +24,7 @@ class ReviewResource extends JsonResource
             'rating' => $this->resource->rating,
             'category' => new CategoryResource($this->resource->category),
             'user' => new UserResource($this->resource->user),
-            'published at' => $this->resource->published_at
+            'city' => $this->resource->city
         ];
     }
 }

@@ -13,17 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reviews', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->text('body');
-            $table->integer('rating');
-            $table->timestamp('published_at');
-            $table->timestamps();
-        });
-
         Schema::table('reviews', function (Blueprint $table) {
-            $table->dropColumn('published_at');
+            $table->foreignId("city");
         });
     }
 
@@ -34,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reviews');
+        Schema::table('reviews', function (Blueprint $table) {
+            $table->dropForeign("city");
+        });
     }
 };
